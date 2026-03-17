@@ -2,7 +2,9 @@
 
 ## 📌 Descripción
 Este proyecto corresponde a la entrega final de Backend III.  
-Se trata de una API para gestión de usuarios, mascotas y adopciones, documentada con **Swagger** y desplegada en **Docker** con conexión a **MongoDB Atlas**.
+Se trata de una API para gestión de usuarios, mascotas y adopciones, 
+documentada con **Swagger** y desplegada en **Docker** 
+con conexión a **MongoDB Atlas**.
 
 ---
 
@@ -22,18 +24,6 @@ Se trata de una API para gestión de usuarios, mascotas y adopciones, documentad
 - `src/docs/` → Documentación Swagger en formato YAML
 - `tests/` → Carpeta con pruebas automatizadas
 - `.env` → Variables de entorno (no se debe versionar)
-
----
-
-## ⚙️ Variables de entorno
-Ejemplo de `.env`:
-
-```env
-PORT=8080
-MONGO_URL=mongodb+srv://<usuario>:<password>@<cluster>.mongodb.net/adoptme?retryWrites=true&w=majority
-JWT_SECRET=supersecreto
-
-
 
 🐳 Levantar el proyecto con Docker
 1. Construir y levantar el contenedor

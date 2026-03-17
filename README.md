@@ -1,85 +1,100 @@
-# 📌 Entrega Final – Backend 3
+# AdoptMe API – Backend III Entrega Final
 
-## 🔹 Descripción
-Proyecto **AdoptMe API – Backend III**.  
-Incluye CRUD de usuarios y mascotas, adopciones, autenticación con JWT, documentación con Swagger y despliegue con Docker Compose.
+## 📌 Descripción
+Este proyecto corresponde a la entrega final de Backend III.  
+Se trata de una API para gestión de usuarios, mascotas y adopciones, 
+documentada con **Swagger** y desplegada en **Docker** 
+con conexión a **MongoDB Atlas**.
 
 ---
 
-## 🔹 Instalación local
+## 🚀 Tecnologías utilizadas
+- Node.js + Express
+- MongoDB Atlas + Mongoose
+- JWT + Cookies
+- Swagger (OpenAPI 3.0)
+- Docker + Docker Compose
+- Jest + Supertest (para pruebas automatizadas)
 
-```bash
-# Clonar el repositorio
-git clone <URL_REPO>
-cd backend3-entrega1
+---
 
-# Instalar dependencias
-npm install
+## 📂 Estructura principal
+- `src/app.js` → Configuración principal de la API
+- `src/routes/` → Routers de usuarios, mascotas, adopciones, sesiones y mocks
+- `src/docs/` → Documentación Swagger en formato YAML
+- `tests/` → Carpeta con pruebas automatizadas
+- `.env` → Variables de entorno (no se debe versionar)
+
+---
+
+## ⚙️ Variables de entorno
+Ejemplo de `.env`:
+
+```env
+PORT=8080
+MONGO_URL=mongodb+srv://<usuario>:<password>@<cluster>.mongodb.net/adoptme?retryWrites=true&w=majority
+JWT_SECRET=supersecreto
 
 
-Variables de entorno
-Este proyecto requiere un archivo .env en la raíz con las siguientes variables:
-- PORT: Puerto en el que corre la API (ej: 8080).
-- MONGO_URL: Cadena de conexión a MongoDB Atlas.
-- JWT_SECRET: Secreto para firmar tokens JWT.
-⚠️ El archivo .env no está en el repositorio por seguridad.
-Se entrega al profesor por separado para la evaluación.
-En el repo se incluye un .env.example como referencia.
-Levantar servidor en desarrollo
-npm run dev
 
-
-
-🔹 Endpoints principales
-👤 Users
-- GET /api/users → listar usuarios
-- GET /api/users/{uid} → obtener usuario por ID
-- PUT /api/users/{uid} → actualizar usuario
-- DELETE /api/users/{uid} → eliminar usuario
-🐶 Pets
-- GET /api/pets → listar mascotas
-- POST /api/pets → crear mascota
-- PUT /api/pets/{pid} → actualizar mascota
-- DELETE /api/pets/{pid} → eliminar mascota
-❤️ Adoptions
-- GET /api/adoptions → listar adopciones
-- POST /api/adoptions/{uid}/{pid} → crear adopción
-🔑 Sessions
-- POST /api/sessions/register → registrar usuario
-- POST /api/sessions/login → iniciar sesión (JWT)
-- GET /api/sessions/current → obtener usuario actual (cookie protegida)
-
-🔹 Documentación Swagger
-Disponible en:
-http://localhost:8080/api/docs
-
-🔹 Docker Compose
-Este proyecto se ejecuta con Docker Compose en lugar de docker run.
-La elección de Compose garantiza:
-- Lectura automática de las variables de entorno desde .env.
-- Mapeo consistente del puerto 8080:8080.
-- Contenedor con nombre fijo (adoptme-api).
-- Reproducibilidad: el evaluador puede levantar el proyecto con un solo comando.
-Comandos principales
-# Construir y levantar servicios
+🐳 Levantar el proyecto con Docker
+1. Construir y levantar el contenedor
 docker compose up --build
 
-# Detener servicios
-docker compose down
+
+2. Ver logs de ejecución
+Deberías ver:
+Listening on 8080
+MongoDB conectado
 
 
-Una vez levantado, la API estará disponible en:
-- Swagger: http://localhost:8080/api/docs
-- Endpoint de mascotas: http://localhost:8080/api/pets
+3. Acceder a la API
+- Swagger UI → http://localhost:8080/api/docs
+- Endpoint de mascotas → http://localhost:8080/api/pets
 
-🔹 Validaciones
-- Usuarios: email único, contraseña encriptada.
-- Mascotas: specie obligatoria.
-- Adopciones: relación entre usuario y mascota.
-- JWT: protege endpoints sensibles.
-- Middleware de errores: respuestas claras (400, 404, 500).
+📌 Documentación Swagger
+La documentación de la API está disponible en Swagger UI:
+👉 http://localhost:8080/api/docs
+Los archivos YAML se encuentran en src/docs/ y describen los endpoints de:
+- Usuarios (users.router.js)
+- Mascotas (pets.router.js)
+- Adopciones (adoption.router.js)
+- Sesiones (sessions.router.js)
+- Mocks (mocks.router.js)
 
-🔹 Evidencia de pruebas
-- Colección Postman exportada.
-- Capturas de Swagger mostrando endpoints funcionando.
-- Ejemplo de adopción exitosa en Atlas.
+📌 Imagen en Docker Hub
+La imagen está publicada en Docker Hub:
+👉 https://hub.docker.com/r/patriciopulega/adoptme-api
+Cómo correrla en cualquier PC
+docker pull patriciopulega/adoptme-api:1.0
+docker run -p 8080:8080 patriciopulega/adoptme-api:1.0
+
+
+La API quedará disponible en:
+👉 http://localhost:8080
+
+🧪 Tests automatizados
+El proyecto incluye pruebas con Jest + Supertest para validar endpoints y lógica de negocio.
+Correr tests en local
+npm test
+
+
+Correr tests dentro del contenedor
+docker exec -it adoptme-api npm test
+
+
+Los tests verifican:
+- Registro y login de usuarios
+- CRUD de mascotas
+- Flujo de adopciones
+- Sesiones y autenticación JWT
+- Endpoints de mocks
+
+🔧 Errores comunes y soluciones
+- Puerto 8080 ocupado → Detener procesos que lo usen (netstat -ano | findstr :8080 + taskkill /PID <PID> /F) o cambiar el mapeo en docker-compose.yml:
+ports:
+  - "3000:8080"
+- Error de conexión a MongoDB → Revisar que la variable MONGO_URL esté definida en .env y accesible desde Docker.
+
+📜 Autor
+Patricio Pulega
